@@ -1,29 +1,37 @@
 import React from "react";
 import axios from "axios";
-const Login = () => {
-  const BASE_URL = "http://192.168.2.103:8081/api/auth/getAllUsers";
+import { setAuthToken } from "../setAuthToken";
+import { Link } from "react-router-dom";
 
-  const config = {
-    headers: {
-      "Content-type": "multipart/form-data",
-      withCredentials: true,
-      Accept: "application/json",
-    },
+const Login = ({ setToken }) => {
+  // const [username, setUserName] = useState();
+  // const [password, setPassword] = useState();
+
+  const BASE_URL = "http://192.168.2.103:8081/api/admin/login";
+
+  const loginPayload = {
+    name: "super",
+    password: "123",
   };
 
-  const token =
-    "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTkyLjE2OC4yLjEwMzo4MDgxL2FwaS9sb2dpbiIsImlhdCI6MTY2MDU1OTA3OCwiZXhwIjoxNjYwNTYyNjc4LCJuYmYiOjE2NjA1NTkwNzgsImp0aSI6IkNqZUdVRVpZMHA1Z1NJWUYiLCJzdWIiOiIxIiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.HazcYVT-7yXWn2RfZ08dp56HV48e33GvwqkqomccNzo";
-
   // 點登入時獲取 /api/auth/getAllUsers 的jwt token
-  const getToken = async () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     try {
+      const response = await axios.post(BASE_URL, loginPayload);
+      //get token from response
+
+      console.log("token", response.data.data[0].access_token);
+      setToken(response.data.data[0].access_token);
+
+      //check jwt token
+      const token = localStorage.getItem("token");
+      console.log("token", token);
       if (token) {
-        axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-      } else delete axios.defaults.headers.common["Authorization"];
+        setAuthToken(token);
+        console.log("setAuthToken已完成");
+      }
 
-      const responseData = await axios.post(BASE_URL, config);
-
-      console.log(responseData);
       // Do your stuff with the token
       // ...
     } catch (error) {
@@ -50,6 +58,7 @@ const Login = () => {
                           className="input"
                           type="text"
                           placeholder="username"
+                          // onChange={(e) => setUserName(e.target.value)}
                         />
                       </div>
                     </div>
@@ -61,15 +70,21 @@ const Login = () => {
                           className="input"
                           type="text"
                           placeholder="******"
+                          // onChange={(e) => setPassword(e.target.value)}
                         />
                       </div>
                     </div>
 
                     <div className="field">
-                      <button className="button is-success is-fullwidth">
-                        Login
-                      </button>
-                      <button onClick={getToken}>獲取後端token</button>
+                      <Link to="dashboard">
+                        <button
+                          type="submit"
+                          className="button is-success is-fullwidth"
+                          onClick={handleSubmit}
+                        >
+                          Login
+                        </button>
+                      </Link>
                     </div>
                   </div>
                 </form>
@@ -78,7 +93,6 @@ const Login = () => {
           </div>
         </div>
       </section>
-      <button onClick={getToken}>獲取後端token</button>
     </>
   );
 };
