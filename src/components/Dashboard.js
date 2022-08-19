@@ -44,6 +44,7 @@ const Dashboard = () => {
       key: "tags",
       dataIndex: "tags",
       align: "center",
+      width: 100,
       filters: [
         {
           text: "啟用",
@@ -120,6 +121,8 @@ const Dashboard = () => {
         getData
       </button>
       <Table
+        size="middle"
+        bordered
         dataSource={dataSource}
         columns={columns}
         scroll={{
