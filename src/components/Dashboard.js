@@ -5,10 +5,10 @@ import { Space, Table, Tag } from "antd";
 
 // https://62ff3dbf9350a1e548da5ec5.mockapi.io/mockData
 const Dashboard = () => {
-  const [name, setName] = useState("Lencs");
+  const [name, setName] = useState("Feza");
   const [age, setAge] = useState(40);
   const [address, setAddress] = useState("台北市");
-  const [tags, setTags] = useState(["mod", "members"]);
+  const [tags, setTags] = useState(["停用"]);
   const [dataSource, setDataSource] = useState(null);
   const [state, setState] = useState({ error: null });
 
@@ -44,10 +44,21 @@ const Dashboard = () => {
       key: "tags",
       dataIndex: "tags",
       align: "center",
+      filters: [
+        {
+          text: "啟用",
+          value: "啟用",
+        },
+        {
+          text: "停用",
+          value: "停用",
+        },
+      ],
+      onFilter: (value, record) => record.tags.indexOf(value) === 0,
       render: (_, { tags }) => (
         <>
           {tags.map((tag) => {
-            let color = tag.length > 5 ? "geekblue" : "green";
+            let color = tag === "啟用" ? "geekblue" : "green";
 
             if (tag === "loser") {
               color = "volcano";
@@ -55,7 +66,7 @@ const Dashboard = () => {
 
             return (
               <Tag color={color} key={tag}>
-                {tag.toUpperCase()}
+                {tag}
               </Tag>
             );
           })}
