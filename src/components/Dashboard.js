@@ -10,27 +10,40 @@ const Dashboard = () => {
   const [address, setAddress] = useState("台北市");
   const [tags, setTags] = useState(["mod", "members"]);
   const [dataSource, setDataSource] = useState(null);
+  const [state, setState] = useState({ error: null });
 
   const columns = [
+    {
+      title: "ID",
+      dataIndex: "id",
+      align: "center",
+      fixed: "left",
+      width: 100,
+    },
     {
       title: "Name",
       dataIndex: "name",
       key: "name",
+      fixed: "left",
+      width: 100,
     },
     {
       title: "Age",
       dataIndex: "age",
       key: "age",
+      align: "center",
     },
     {
       title: "Address",
       dataIndex: "address",
       key: "address",
+      align: "center",
     },
     {
       title: "Tags",
       key: "tags",
       dataIndex: "tags",
+      align: "center",
       render: (_, { tags }) => (
         <>
           {tags.map((tag) => {
@@ -52,6 +65,9 @@ const Dashboard = () => {
     {
       title: "Action",
       key: "action",
+      align: "center",
+      fixed: "right",
+      width: 100,
       render: (_, record) => (
         <Space size="middle">
           <Link to={record.name}>編輯</Link>
@@ -75,10 +91,15 @@ const Dashboard = () => {
         "https://62ff3dbf9350a1e548da5ec5.mockapi.io/mockData"
       );
       setDataSource(items);
-    } catch (err) {
-      return err;
+    } catch (error) {
+      setState({ error });
     }
   }
+
+  if (state.error) {
+    return <h1>{state.error.message}</h1>;
+  }
+
   return (
     <div>
       <button onClick={postData} type="submit">
@@ -87,7 +108,15 @@ const Dashboard = () => {
       <button onClick={getData} type="submit">
         getData
       </button>
-      <Table dataSource={dataSource} columns={columns} />;
+      <Table
+        dataSource={dataSource}
+        columns={columns}
+        scroll={{
+          x: 1500,
+          y: 300,
+        }}
+      />
+      ;
     </div>
   );
 };
