@@ -2,7 +2,7 @@ import Login from "./components/Login";
 import { Guard } from "./pages/Guard";
 import Dashboard from "./components/Dashboard";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { useStateContext } from "./components/ContextProvider";
+import { useStateContext } from "./contexts/ContextProvider";
 
 function setToken(userToken) {
   const getUserToken = JSON.stringify(userToken);
@@ -17,12 +17,15 @@ function App() {
   console.log("user", user);
   return (
     <BrowserRouter>
-      <Routes>
-        <Route element={<Guard token="token" routeRedirect="/user" />}>
-          <Route path="/dashboard" element={<Dashboard />} />
-        </Route>
-      </Routes>
-      <Login setToken={setToken} />
+      {user?.loggedIn === true && (
+        <Routes>
+          <Route element={<Guard token="token" routeRedirect="/user" />}>
+            <Route path="/" element={<Dashboard />} />
+            <Route path="/Dashboard" element={<Dashboard />} />
+          </Route>
+        </Routes>
+      )}
+      {!user?.loggedIn && <Login setToken={setToken} />}
     </BrowserRouter>
   );
 }

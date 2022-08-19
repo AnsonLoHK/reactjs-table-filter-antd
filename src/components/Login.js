@@ -2,7 +2,7 @@ import React from "react";
 import axios from "axios";
 import { setAuthToken } from "../setAuthToken";
 import { Link } from "react-router-dom";
-import { useStateContext } from "./ContextProvider";
+import { useStateContext } from "../contexts/ContextProvider";
 
 const Login = ({ setToken }) => {
   const { setUser } = useStateContext();
@@ -32,7 +32,7 @@ const Login = ({ setToken }) => {
         console.log("setAuthToken已完成");
       }
 
-      // setUser({ loggedIn: true });
+      setUser({ loggedIn: true });
 
       // Do your stuff with the token
       // ...
