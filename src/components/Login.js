@@ -2,10 +2,10 @@ import React from "react";
 import axios from "axios";
 import { setAuthToken } from "../setAuthToken";
 import { Link } from "react-router-dom";
+import { useStateContext } from "./ContextProvider";
 
 const Login = ({ setToken }) => {
-  // const [username, setUserName] = useState();
-  // const [password, setPassword] = useState();
+  const { setUser } = useStateContext();
 
   const BASE_URL = "http://192.168.2.103:8081/api/admin/login";
 
@@ -31,6 +31,8 @@ const Login = ({ setToken }) => {
         setAuthToken(token);
         console.log("setAuthToken已完成");
       }
+
+      // setUser({ loggedIn: true });
 
       // Do your stuff with the token
       // ...
