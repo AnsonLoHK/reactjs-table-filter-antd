@@ -17,15 +17,16 @@ function App() {
   console.log("user", user);
   return (
     <BrowserRouter>
-      {user?.loggedIn === true && (
+      <Dashboard />
+      {/* {user?.loggedIn === false && (
         <Routes>
-          <Route element={<Guard token="token" routeRedirect="/user" />}>
+          <Route element={<Guard token="token" routeRedirect="/" />}>
             <Route path="/" element={<Dashboard />} />
             <Route path="/Dashboard" element={<Dashboard />} />
           </Route>
         </Routes>
-      )}
-      {!user?.loggedIn && <Login setToken={setToken} />}
+      )} */}
+      {/* {!user?.loggedIn && <Login setToken={setToken} />} */}
     </BrowserRouter>
   );
 }
