@@ -5,10 +5,10 @@ import { Space, Table, Tag, Typography } from "antd";
 const { Text } = Typography;
 // https://62ff3dbf9350a1e548da5ec5.mockapi.io/mockData
 const Dashboard = () => {
-  const [name, setName] = useState("瘦子");
-  const [category, setCategory] = useState("Rummy");
+  const [name, setName] = useState("天才衝衝衝");
+  const [category, setCategory] = useState("跑跑卡丁車");
   const [address, setAddress] = useState("台北市");
-  const [tags, setTags] = useState(["停用"]);
+  const [tags, setTags] = useState(["啟用"]);
   const [income, setIncome] = useState(32750);
   const [payment, setpayment] = useState(100);
   const [dataSource, setDataSource] = useState(null);
