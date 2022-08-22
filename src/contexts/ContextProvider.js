@@ -11,12 +11,24 @@ export const useStateContext = () => useContext(StateContext);
 // children: provider以下的元件都能吃到我們即將提供的context內容，作為props方式由上往下傳遞
 const ContextProvider = ({ children }) => {
   const [user, setUser] = useState({ loggedIn: false });
+  const [dates, setDates] = useState([]);
+  const [filters, setFilters] = useState({
+    name: "",
+    email: "",
+    gender: "",
+    from: "",
+    to: "",
+  });
 
   return (
     <StateContext.Provider
       value={{
         user,
         setUser,
+        dates,
+        setDates,
+        filters,
+        setFilters,
       }}
     >
       {children}
