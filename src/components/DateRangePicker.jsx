@@ -19,25 +19,20 @@ const DateRangePicker = () => {
 
   console.log("dates", rowData);
   const handleBlur = () => {
-    const fromADate = new Date(dates[0]).getTime();
-    console.log("fromADate", fromADate);
-    const toADate = new Date(dates[1]).getTime();
-    console.log("toADate", toADate);
+    const fromADate = Date.parse(dates[0]);
+
+    const toADate = Date.parse(dates[1]);
 
     // eslint-disable-next-line array-callback-return
-    const myDates = rowData.filter((row) => {
-      const beforeCheck = new Date(row.date).getTime();
+    return rowData.filter((user) => 
+      // eslint-disable-next-line no-unused-expressions
+      Date.parse(user.date) * 1000 >= fromADate &&
+        Date.parse(user.date) * 1000 <= toADate;
+    ).map(
 
-      if (beforeCheck > fromADate && beforeCheck <= fromADate) {
-        return row;
-      } else {
-        return null;
-      }
-    });
+    );
 
-    console.log("myDates", myDates);
 
-    setRowData(myDates);
   };
   return (
     <div>
