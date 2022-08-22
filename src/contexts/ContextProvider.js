@@ -12,6 +12,7 @@ export const useStateContext = () => useContext(StateContext);
 const ContextProvider = ({ children }) => {
   const [user, setUser] = useState({ loggedIn: false });
   const [dates, setDates] = useState([]);
+  const [allData, setData] = useState(null);
   const [filters, setFilters] = useState({
     name: "",
     email: "",
@@ -29,6 +30,8 @@ const ContextProvider = ({ children }) => {
         setDates,
         filters,
         setFilters,
+        allData,
+        setData,
       }}
     >
       {children}

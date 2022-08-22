@@ -3,6 +3,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { Space, Table, Tag, Typography } from "antd";
 import DateRangePicker from "./DateRangePicker";
+import { useStateContext } from "../contexts/ContextProvider";
 const { Text } = Typography;
 // https://62ff3dbf9350a1e548da5ec5.mockapi.io/mockData
 const Dashboard = () => {
@@ -13,6 +14,7 @@ const Dashboard = () => {
   const [income, setIncome] = useState(32750);
   const [payment, setpayment] = useState(100);
   const [dataSource, setDataSource] = useState(null);
+  const { allData } = useStateContext();
   const [state, setState] = useState({ error: null });
 
   const columns = [
@@ -84,7 +86,7 @@ const Dashboard = () => {
       <Table
         size="middle"
         bordered
-        dataSource={rowData}
+        dataSource={allData ? allData : rowData}
         columns={columns}
         scroll={{
           x: 1500,
