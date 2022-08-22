@@ -1,51 +1,47 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { DatePicker } from "antd";
 import moment from "moment";
 import { useStateContext } from "../contexts/ContextProvider";
 const { RangePicker } = DatePicker;
 
 const DateRangePicker = () => {
-  const { dates, setDates, setFilters, filters, setData } = useStateContext();
+  const { dates, setDates, rowData, setRowData } = useStateContext();
 
-  const handleFilterDate = (filters) => {
-    console.log("filters!", filters.from);
-    // setData(filteredData);
-  };
-
-  const range = (start, end) => {
-    const result = [];
-
-    for (let i = start; i < end; i++) {
-      result.push(i);
-    }
-
-    return result;
-  }; // eslint-disable-next-line arrow-body-style
-
-  const disabledDate = (current) => {
-    // Can not select days before today and today
-    return current && current < moment().endOf("day");
-  };
   const disabledRangeTime = (_, type) => {
     if (type === "start") {
       return {
-        disabledHours: () => range(0, 60).splice(4, 20),
-        disabledMinutes: () => range(30, 60),
+        disabledHours: () => [1, 25],
+        disabledMinutes: () => [55, 56],
         disabledSeconds: () => [55, 56],
       };
     }
-
-    return {
-      disabledHours: () => range(0, 60).splice(20, 4),
-      disabledMinutes: () => range(0, 31),
-      disabledSeconds: () => [55, 56],
-    };
   };
 
+  console.log("dates", rowData);
+  const handleBlur = () => {
+    const fromADate = new Date(dates[0]).getTime();
+    console.log("fromADate", fromADate);
+    const toADate = new Date(dates[1]).getTime();
+    console.log("toADate", toADate);
+
+    // eslint-disable-next-line array-callback-return
+    const myDates = rowData.filter((row) => {
+      const beforeCheck = new Date(row.date).getTime();
+
+      if (beforeCheck > fromADate && beforeCheck <= fromADate) {
+        return row;
+      } else {
+        return null;
+      }
+    });
+
+    console.log("myDates", myDates);
+
+    setRowData(myDates);
+  };
   return (
     <div>
       <RangePicker
-        disabledDate={disabledDate}
         disabledTime={disabledRangeTime}
         showTime={{
           hideDisabledOptions: true,
@@ -54,7 +50,16 @@ const DateRangePicker = () => {
             moment("11:59:59", "HH:mm:ss"),
           ],
         }}
-        format="YYYY-MM-DD HH:mm:ss"
+        // format="YYYY-MM-DD HH:mm:ss"
+        onChange={(values) => {
+          setDates(
+            values.map((item) => {
+              return moment(item).format("YYYY-MM-DD HH:mm:ss");
+            })
+          );
+        }}
+        onBlur={handleBlur}
+        // 2022-08-01 00:01:01
       />
     </div>
   );

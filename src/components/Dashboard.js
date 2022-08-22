@@ -14,7 +14,7 @@ const Dashboard = () => {
   const [income, setIncome] = useState(32750);
   const [payment, setpayment] = useState(100);
   const [dataSource, setDataSource] = useState(null);
-  const { allData } = useStateContext();
+  const { allData, rowData } = useStateContext();
   const [state, setState] = useState({ error: null });
 
   const columns = [
@@ -63,13 +63,6 @@ const Dashboard = () => {
     }
   }
 
-  const rowData = [
-    { make: "toyoya", model: "Celica", price: "35000", date: "09-02-2022" },
-    { make: "toyoya", model: "Celica", price: "35000", date: "11-02-2022" },
-    { make: "toyoya", model: "Celica", price: "35000", date: "10-02-2022" },
-    { make: "toyoya", model: "Celica", price: "35000", date: "12-02-2022" },
-  ];
-
   if (state.error) {
     return <h1>{state.error.message}</h1>;
   }
@@ -86,7 +79,7 @@ const Dashboard = () => {
       <Table
         size="middle"
         bordered
-        dataSource={allData ? allData : rowData}
+        dataSource={rowData}
         columns={columns}
         scroll={{
           x: 1500,

@@ -21,6 +21,33 @@ const ContextProvider = ({ children }) => {
     to: "",
   });
 
+  const [rowData, setRowData] = useState([
+    {
+      make: "toyoya",
+      model: "Celica",
+      price: "35000",
+      date: "2022-08-23 23:04:04",
+    },
+    {
+      make: "toyoya",
+      model: "Celica",
+      price: "35000",
+      date: "2022-08-22 23:04:04",
+    },
+    {
+      make: "toyoya",
+      model: "Celica",
+      price: "35000",
+      date: "2022-08-25 23:04:04",
+    },
+    {
+      make: "toyoya",
+      model: "Celica",
+      price: "35000",
+      date: "2022-08-27 23:04:04",
+    },
+  ]);
+
   return (
     <StateContext.Provider
       value={{
@@ -32,6 +59,8 @@ const ContextProvider = ({ children }) => {
         setFilters,
         allData,
         setData,
+        rowData,
+        setRowData,
       }}
     >
       {children}
