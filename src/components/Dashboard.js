@@ -14,8 +14,6 @@ const Dashboard = () => {
   const [category, setCategory] = useState("跑跑卡丁車");
   const [address, setAddress] = useState("台北市");
   const [tags, setTags] = useState(["啟用"]);
-  const [income, setIncome] = useState(32750);
-  const [payment, setpayment] = useState(100);
   const [data, setData] = useState();
   const { allData, rowData } = useStateContext();
   const [loading, setLoading] = useState(false);
@@ -134,12 +132,6 @@ const Dashboard = () => {
       ...getColumnSearchProps("name"),
     },
     {
-      title: "虧損",
-      dataIndex: "payment",
-      key: "payment",
-      align: "center",
-    },
-    {
       title: "遊戲類別",
       dataIndex: "category",
       key: "category",
@@ -240,7 +232,6 @@ const Dashboard = () => {
       category,
       address,
       tags,
-      payment,
     });
   };
 
