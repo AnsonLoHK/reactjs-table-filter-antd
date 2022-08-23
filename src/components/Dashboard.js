@@ -23,6 +23,7 @@ const Dashboard = () => {
   const searchInput = useRef(null);
   const [searchText, setSearchText] = useState("");
   const [searchedColumn, setSearchedColumn] = useState("");
+
   const getColumnSearchProps = (dataIndex) => ({
     filterDropdown: ({
       setSelectedKeys,
@@ -114,6 +115,7 @@ const Dashboard = () => {
         text
       ),
   });
+
   const columns = [
     {
       title: "編號",
@@ -130,12 +132,6 @@ const Dashboard = () => {
       fixed: "left",
       width: "5%",
       ...getColumnSearchProps("name"),
-    },
-    {
-      title: "營利",
-      dataIndex: "income",
-      key: "income",
-      align: "center",
     },
     {
       title: "虧損",
@@ -244,7 +240,6 @@ const Dashboard = () => {
       category,
       address,
       tags,
-      income,
       payment,
     });
   };
@@ -286,37 +281,6 @@ const Dashboard = () => {
         scroll={{
           x: 1500,
           y: 300,
-        }}
-        summary={(pageData) => {
-          let totalIncome = 0;
-          let totalPayment = 0;
-          pageData.forEach(({ income, payment }) => {
-            totalIncome += income;
-            totalPayment += payment;
-          });
-          return (
-            <>
-              <Table.Summary.Row align="center">
-                <Table.Summary.Cell index={0} colSpan={2}>
-                  各項總額
-                </Table.Summary.Cell>
-                <Table.Summary.Cell index={3}>
-                  <Text>{totalIncome}</Text>
-                </Table.Summary.Cell>
-                <Table.Summary.Cell index={3}>
-                  <Text type="danger">{totalPayment}</Text>
-                </Table.Summary.Cell>
-              </Table.Summary.Row>
-              <Table.Summary.Row align="center">
-                <Table.Summary.Cell index={0} colSpan={2}>
-                  損益盈餘
-                </Table.Summary.Cell>
-                <Table.Summary.Cell index={2} colSpan={2}>
-                  <Text type="danger">{totalIncome - totalPayment}</Text>
-                </Table.Summary.Cell>
-              </Table.Summary.Row>
-            </>
-          );
         }}
       />
       ;
