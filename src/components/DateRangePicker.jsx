@@ -24,15 +24,12 @@ const DateRangePicker = () => {
     const toADate = Date.parse(dates[1]);
 
     // eslint-disable-next-line array-callback-return
-    return rowData.filter((user) => 
-      // eslint-disable-next-line no-unused-expressions
-      Date.parse(user.date) * 1000 >= fromADate &&
-        Date.parse(user.date) * 1000 <= toADate;
-    ).map(
-
+    return rowData.filter(
+      (user) =>
+        // eslint-disable-next-line no-unused-expressions
+        Date.parse(user.date) * 1000 >= fromADate &&
+        Date.parse(user.date) * 1000 <= toADate
     );
-
-
   };
   return (
     <div>
