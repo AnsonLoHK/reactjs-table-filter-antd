@@ -1,34 +1,42 @@
-import React, { useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { SearchOutlined } from "@ant-design/icons";
 import { Button, Input, Space, Table } from "antd";
 import Highlighter from "react-highlight-words";
+import axios from "axios";
 
 const TableSearch = () => {
-  const [dataSource, setDataSource] = useState([
-    {
-      key: "1",
-      name: "Mike",
-      age: 32,
-      address: "10 Downing Street",
-      candidate: "candidate1",
-    },
-    {
-      key: "2",
-      name: "John",
-      age: 42,
-      address: "10 Downing Street",
-      candidate: "candidate2",
-    },
-    {
-      key: "3",
-      name: "Barton",
-      age: 12,
-      address: "Downing Street",
-      candidate: "candidate3",
-    },
-  ]);
+  const [data, setData] = useState();
   const [searchText, setSearchText] = useState("");
   const [searchedColumn, setSearchedColumn] = useState("");
+  const searchInput = useRef(null);
+  const [loading, setLoading] = useState(false);
+  const [state, setState] = useState({ error: null });
+
+  async function fetchData() {
+    try {
+      const { data: results } = await axios.get(
+        "https://62ff3dbf9350a1e548da5ec5.mockapi.io/mockData"
+      );
+      setData(results);
+      setLoading(false);
+    } catch (error) {
+      setState({ error });
+    }
+  }
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const handleSearch = (selectedKeys, confirm, dataIndex) => {
+    confirm();
+    setSearchText(selectedKeys[0]);
+    setSearchedColumn(dataIndex);
+  };
+  const handleReset = (clearFilters) => {
+    clearFilters();
+    setSearchText("");
+  };
 
   const getColumnSearchProps = (dataIndex) => ({
     filterDropdown: ({
@@ -43,6 +51,7 @@ const TableSearch = () => {
         }}
       >
         <Input
+          ref={searchInput}
           placeholder={`Search ${dataIndex}`}
           value={selectedKeys[0]}
           onChange={(e) =>
@@ -66,6 +75,28 @@ const TableSearch = () => {
           >
             Search
           </Button>
+          <Button
+            onClick={() => clearFilters && handleReset(clearFilters)}
+            size="small"
+            style={{
+              width: 90,
+            }}
+          >
+            Reset
+          </Button>
+          <Button
+            type="link"
+            size="small"
+            onClick={() => {
+              confirm({
+                closeDropdown: false,
+              });
+              setSearchText(selectedKeys[0]);
+              setSearchedColumn(dataIndex);
+            }}
+          >
+            Filter
+          </Button>
         </Space>
       </div>
     ),
@@ -76,16 +107,22 @@ const TableSearch = () => {
         }}
       />
     ),
+    onFilter: (value, record) =>
+      record[dataIndex].toString().toLowerCase().includes(value.toLowerCase()),
+    onFilterDropdownVisibleChange: (visible) => {
+      if (visible) {
+        setTimeout(() => searchInput.current?.select(), 100);
+      }
+    },
     render: (text) =>
       searchedColumn === dataIndex ? (
         <Highlighter
-          highlightClassName="YourHighlightClass"
           highlightStyle={{
             backgroundColor: "#ffc069",
             padding: 0,
           }}
           searchWords={[searchText]}
-          autoEscape={true}
+          autoEscape
           textToHighlight={text ? text.toString() : ""}
         />
       ) : (
@@ -95,51 +132,26 @@ const TableSearch = () => {
 
   const columns = [
     {
-      title: "Name",
+      title: "name",
       dataIndex: "name",
       key: "name",
-      width: "30%",
+      width: "20%",
       ...getColumnSearchProps("name"),
     },
     {
-      title: "Age",
-      dataIndex: "age",
-      key: "age",
+      title: "category",
+      dataIndex: "category",
       width: "20%",
-      ...getColumnSearchProps("age"),
-    },
-    {
-      title: "Address",
-      dataIndex: "address",
-      key: "address",
-      ...getColumnSearchProps("address"),
-    },
-    {
-      title: "candidate",
-      dataIndex: "candidate",
-      key: "candidate",
-      width: "16.66%",
-      ...getColumnSearchProps("candidate"),
+      key: "category",
+      ...getColumnSearchProps("category"),
     },
   ];
 
-  const handleSearch = (selectedKeys, confirm, dataIndex) => {
-    console.log("selectedKeys, confirm, dataIndex", {
-      selectedKeys,
-      confirm,
-      dataIndex,
-    });
-    confirm();
-    setSearchText(selectedKeys[0]);
-    setSearchedColumn(dataIndex);
-  };
+  if (state.error) {
+    return <h1>{state.error.message}</h1>;
+  }
 
-  return (
-    <div>
-      TableSearch
-      <Table dataSource={dataSource} columns={columns} />;
-    </div>
-  );
+  return <Table dataSource={data} columns={columns} loading={loading} />;
 };
 
 export default TableSearch;
