@@ -10,17 +10,27 @@ import Highlighter from "react-highlight-words";
 const { Text } = Typography;
 // https://62ff3dbf9350a1e548da5ec5.mockapi.io/mockData
 const Dashboard = () => {
+  // 測試初始值
   const [name, setName] = useState("天才衝衝衝");
-  const [category, setCategory] = useState("跑跑卡丁車");
-  const [address, setAddress] = useState("台北市");
+  const [createat, setCreateat] = useState("2022-08-16T08:42:49.000000Z");
+  const [address, setAddress] = useState("barton@gmail.com");
   const [tags, setTags] = useState(["啟用"]);
   const [data, setData] = useState();
-  const { allData, rowData } = useStateContext();
   const [loading, setLoading] = useState(false);
   const [state, setState] = useState({ error: null });
-  const searchInput = useRef(null);
+  // 其他
   const [searchText, setSearchText] = useState("");
   const [searchedColumn, setSearchedColumn] = useState("");
+  const searchInput = useRef(null);
+
+  const postData = () => {
+    axios.post(`https://62ff3dbf9350a1e548da5ec5.mockapi.io/mockData`, {
+      name,
+      address,
+      createat,
+      tags,
+    });
+  };
 
   const getColumnSearchProps = (dataIndex) => ({
     filterDropdown: ({
@@ -92,7 +102,10 @@ const Dashboard = () => {
       />
     ),
     onFilter: (value, record) =>
-      record[dataIndex].toString().toLowerCase().includes(value.toLowerCase()),
+      record[dataIndex]
+        ?.toString()
+        .toLowerCase()
+        .includes(value.toLowerCase()) || "",
     onFilterDropdownVisibleChange: (visible) => {
       if (visible) {
         setTimeout(() => searchInput.current?.select(), 100);
@@ -132,39 +145,19 @@ const Dashboard = () => {
       ...getColumnSearchProps("name"),
     },
     {
-      title: "遊戲類別",
-      dataIndex: "category",
-      key: "category",
-      align: "center",
-      filters: [
-        {
-          text: "武俠遊戲",
-          value: "武俠遊戲",
-        },
-        {
-          text: "LOL",
-          value: "LOL",
-        },
-        {
-          text: "跑跑卡丁車",
-          value: "跑跑卡丁車",
-        },
-        {
-          text: "Lottery Ada",
-          value: "Lottery Ada",
-        },
-        {
-          text: "Rummy",
-          value: "Rummy",
-        },
-      ],
-      onFilter: (value, record) => record.category.indexOf(value) === 0,
-    },
-    {
       title: "電子信箱",
       dataIndex: "address",
       key: "address",
       align: "center",
+      ...getColumnSearchProps("address"),
+    },
+
+    {
+      title: "創建時間",
+      dataIndex: "createat",
+      key: "createat",
+      align: "center",
+      ...getColumnSearchProps("createat"),
     },
     {
       title: "Tags",
@@ -213,6 +206,35 @@ const Dashboard = () => {
         </Space>
       ),
     },
+    // {
+    //   title: "遊戲類別",
+    //   dataIndex: "category",
+    //   key: "category",
+    //   align: "center",
+    //   filters: [
+    //     {
+    //       text: "武俠遊戲",
+    //       value: "武俠遊戲",
+    //     },
+    //     {
+    //       text: "LOL",
+    //       value: "LOL",
+    //     },
+    //     {
+    //       text: "跑跑卡丁車",
+    //       value: "跑跑卡丁車",
+    //     },
+    //     {
+    //       text: "Lottery Ada",
+    //       value: "Lottery Ada",
+    //     },
+    //     {
+    //       text: "Rummy",
+    //       value: "Rummy",
+    //     },
+    //   ],
+    //   onFilter: (value, record) => record.category.indexOf(value) === 0,
+    // },
   ];
 
   const handleSearch = (selectedKeys, confirm, dataIndex) => {
@@ -224,15 +246,6 @@ const Dashboard = () => {
   const handleReset = (clearFilters) => {
     clearFilters();
     setSearchText("");
-  };
-
-  const postData = () => {
-    axios.post(`https://62ff3dbf9350a1e548da5ec5.mockapi.io/mockData`, {
-      name,
-      category,
-      address,
-      tags,
-    });
   };
 
   async function fetchData() {
@@ -257,9 +270,9 @@ const Dashboard = () => {
 
   return (
     <div>
-      {/* <button onClick={postData} type="submit">
+      <button onClick={postData} type="submit">
         POST假數據
-      </button> */}
+      </button>
       <button onClick={fetchData} type="submit">
         getData
       </button>
