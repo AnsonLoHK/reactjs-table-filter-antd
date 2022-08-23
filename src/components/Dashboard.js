@@ -123,7 +123,7 @@ const Dashboard = () => {
       width: "5%",
     },
     {
-      title: "玩家",
+      title: "名稱",
       dataIndex: "name",
       key: "name",
       align: "center",
@@ -161,7 +161,7 @@ const Dashboard = () => {
       onFilter: (value, record) => record.category.indexOf(value) === 0,
     },
     {
-      title: "Address",
+      title: "電子信箱",
       dataIndex: "address",
       key: "address",
       align: "center",
