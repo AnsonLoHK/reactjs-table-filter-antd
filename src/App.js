@@ -3,7 +3,8 @@
 import Dashboard from "./components/Dashboard";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useStateContext } from "./contexts/ContextProvider";
-import TableSearch from "./components/TableSearch";
+// import TableSearch from "./components/TableSearch";
+import DateTableSearch from "./components/DateTableSearch";
 // import DateTimeForm from "./components/DateTimeForm";
 
 function setToken(userToken) {
@@ -20,7 +21,8 @@ function App() {
   return (
     <BrowserRouter>
       <Dashboard />
-      <TableSearch />
+      {/* <TableSearch /> */}
+      <DateTableSearch />
       {/* <DateTimeForm /> */}
 
       {/* {user?.loggedIn === false && (

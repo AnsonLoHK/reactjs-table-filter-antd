@@ -105,6 +105,7 @@ const Dashboard = () => {
         ?.toString()
         .toLowerCase()
         .includes(value.toLowerCase()) || "",
+
     onFilterDropdownVisibleChange: (visible) => {
       if (visible) {
         setTimeout(() => searchInput.current?.select(), 100);
@@ -292,26 +293,3 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
-
-// const columns = [
-//   {
-//     title: "make",
-//     dataIndex: "make",
-//     key: "make",
-//   },
-//   {
-//     title: "model",
-//     dataIndex: "model",
-//     key: "model",
-//   },
-//   {
-//     title: "price",
-//     dataIndex: "price",
-//     key: "price",
-//   },
-//   {
-//     title: "date",
-//     dataIndex: "date",
-//     key: "date",
-//   },
-// ];
