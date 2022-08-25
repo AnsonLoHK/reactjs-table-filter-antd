@@ -2,10 +2,11 @@
 // import { Guard } from "./pages/Guard";
 // import Dashboard from "./components/Dashboard";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import CrudExample from "./components/CrudExample";
 import { useStateContext } from "./contexts/ContextProvider";
 // import TableSearch from "./components/TableSearch";
-import DateTableSearch from "./components/DateTableSearch";
-import TablePagination from "./components/TablePagination";
+// import DateTableSearch from "./components/DateTableSearch";
+// import TablePagination from "./components/TablePagination";
 // import DateTimeForm from "./components/DateTimeForm";
 
 function setToken(userToken) {
@@ -21,11 +22,11 @@ function App() {
   console.log("user", user);
   return (
     <BrowserRouter>
-      <TablePagination />
+      <CrudExample />
       {/* <Dashboard /> */}
       <hr />
-
-      <DateTableSearch />
+      {/* <TablePagination />
+      <DateTableSearch /> */}
       {/* <DateTimeForm /> */}
       {/* <TableSearch /> */}
 
