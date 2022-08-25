@@ -21,15 +21,13 @@ const Login = ({ setToken }) => {
       const response = await axios.post(BASE_URL, loginPayload);
       //get token from response
 
-      console.log("token", response.data.data[0].access_token);
       setToken(response.data.data[0].access_token);
 
       //check jwt token
       const token = localStorage.getItem("token");
-      console.log("token", token);
+
       if (token) {
         setAuthToken(token);
-        console.log("setAuthToken已完成");
       }
 
       setUser({ loggedIn: true });
@@ -38,7 +36,6 @@ const Login = ({ setToken }) => {
       // ...
     } catch (error) {
       if (error.response && error.response.status === 401) {
-        console.log("Token not valid!");
         throw new Error("Error 401");
       }
     }

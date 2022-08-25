@@ -24,7 +24,6 @@ const TableSearch = () => {
     }
   }
 
-  console.log("data", data);
 
   useEffect(() => {
     setLoading(true);

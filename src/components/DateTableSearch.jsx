@@ -46,11 +46,10 @@ const DateTableSearch = () => {
   };
 
   const onChangeHandler = (event) => {
-    console.log(event);
     let filters = {};
     filters["startDate"] = moment(event[0]).toDate();
     filters["endDate"] = moment(event[1]).toDate();
-    console.log("filters", filters);
+
     fetch("/getAllForAdmin", {
       method: "POST", // or 'PUT'
       headers: {
@@ -84,9 +83,7 @@ const DateTableSearch = () => {
             //     values !== null ? [values.format("DD-MM-YYYY")] : []
             //   )
             // }
-            onChange={(values) => {
-              console.log(values);
-            }}
+            onChange={(values) => {}}
             onPressEnter={() => {
               confirm();
               setSearchText(selectedKeys[0]);

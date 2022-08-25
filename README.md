@@ -1,5 +1,10 @@
 ## Available Scripts
 
+## 更新:
+
+0825 jwt 有寫，但是具體完整的登入登出夾帶 token 邏輯寫在另一個專案
+https://github.com/AnsonLoHK/reactjs-dashboard-0823
+
 描述:用 antd 套件操作
 
 主題 1:隨機產生資料 CrudExample

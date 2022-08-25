@@ -1,4 +1,4 @@
-// import Login from "./components/Login";
+import Login from "./components/Login";
 // import { Guard } from "./pages/Guard";
 import Dashboard from "./components/Dashboard";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
@@ -11,15 +11,16 @@ function setToken(userToken) {
   const getUserToken = JSON.stringify(userToken);
 
   localStorage.setItem("token", JSON.stringify(getUserToken));
-
-  console.log("localStorage已成功暫存localStorage");
 }
 
 function App() {
   const { user } = useStateContext();
-  console.log("user", user);
+
   return (
     <BrowserRouter>
+      <div>
+        <Login setToken={setToken} />
+      </div>
       <h1>主題1</h1>
       <CrudExample />
       <hr />

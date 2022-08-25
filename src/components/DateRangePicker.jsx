@@ -17,7 +17,6 @@ const DateRangePicker = () => {
     }
   };
 
-  console.log("dates", rowData);
   const handleBlur = () => {
     const fromADate = Date.parse(dates[0]);
 
