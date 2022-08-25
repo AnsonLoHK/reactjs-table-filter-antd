@@ -1,10 +1,11 @@
 // import Login from "./components/Login";
 // import { Guard } from "./pages/Guard";
-import Dashboard from "./components/Dashboard";
+// import Dashboard from "./components/Dashboard";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useStateContext } from "./contexts/ContextProvider";
 // import TableSearch from "./components/TableSearch";
 import DateTableSearch from "./components/DateTableSearch";
+import TablePagination from "./components/TablePagination";
 // import DateTimeForm from "./components/DateTimeForm";
 
 function setToken(userToken) {
@@ -20,10 +21,13 @@ function App() {
   console.log("user", user);
   return (
     <BrowserRouter>
-      <Dashboard />
-      {/* <TableSearch /> */}
+      <TablePagination />
+      {/* <Dashboard /> */}
+      <hr />
+
       <DateTableSearch />
       {/* <DateTimeForm /> */}
+      {/* <TableSearch /> */}
 
       {/* {user?.loggedIn === false && (
         <Routes>

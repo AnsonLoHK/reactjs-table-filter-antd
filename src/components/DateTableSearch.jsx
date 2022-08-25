@@ -3,7 +3,6 @@ import { DatePicker, Space, Table, Button } from "antd";
 import Highlighter from "react-highlight-words";
 import { SearchOutlined } from "@ant-design/icons";
 import moment from "moment";
-import { constant } from "lodash";
 
 const { RangePicker } = DatePicker;
 
@@ -47,6 +46,7 @@ const DateTableSearch = () => {
   };
 
   const onChangeHandler = (event) => {
+    console.log(event);
     let filters = {};
     filters["startDate"] = moment(event[0]).toDate();
     filters["endDate"] = moment(event[1]).toDate();
@@ -74,15 +74,19 @@ const DateTableSearch = () => {
       <div style={{ padding: 8 }}>
         <Space>
           <RangePicker
-            format={"DD-MM-YY"}
             value={selectedKeys[0]}
             // onChange={(e) => {
 
             //   setSelectedKeys([e.format("YYYY-MM-DDT00:00:00Z")]);
             // }}
-            onChange={(e) =>
-              setSelectedKeys(e !== null ? [e.format("DD-MM-YYYY")] : [])
-            }
+            // onChange={(values) =>
+            //   setSelectedKeys(
+            //     values !== null ? [values.format("DD-MM-YYYY")] : []
+            //   )
+            // }
+            onChange={(values) => {
+              console.log(values);
+            }}
             onPressEnter={() => {
               confirm();
               setSearchText(selectedKeys[0]);
@@ -201,7 +205,8 @@ const DateTableSearch = () => {
   return (
     <>
       {/* 畫面會消失 */}
-      <RangePicker onChange={() => onChangeHandler} format={dateFormat} />
+      <p>時間可以排序</p>
+      <RangePicker format={dateFormat} />
       <Table columns={columns} dataSource={data} />
     </>
   );
